@@ -15,7 +15,7 @@ select sum(saleprice) from customer, orders where customer.custid=orders.custid 
 
 select count(*) from customer,orders where customer.custid=orders.custid and customer.name like '???';
 
-select count(*) from book, customer, orders where book.bookid=orders.bookid and customer.custid=orders.custid and customer.name like '???';
+select count(publisher) from book, customer, orders where book.bookid=orders.bookid and customer.custid=orders.custid and customer.name like '???';
 
 
 
