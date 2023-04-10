@@ -5,21 +5,34 @@ select *from imported_book;
 
 
 
-select count( distinct publisher) from customer, Orders, Book where (customer.custid=Orders.custid) and (Book.bookid=Orders.bookid) and (customer.name='???');
+select bookname, price, price-saleprice 
+    from customer, Orders, Book 
+    where customer.custid=Orders.custid 
+        and book.bookid=Orders.bookid 
+        and customer.name like '박지성';
 
-select bookname, price, price-saleprice from customer, Orders, Book where (customer.custid=Orders.custid) and (Book.bookid=Orders.bookid) and (customer.name='???');
+
+select bookname from book where not exists(select bookname from customer,orders
+    where customer.custid=orders.custid 
+        and orders.bookid=book.bookid 
+        and customer.name LIKE '박지성');
 
 
 
 
 /*2-8*/
-select name from Book, orders, customer MINUS select name from Book, orders, customer where (Customer.custid=orders.custid) and (orders.bookid=Book.bookid);
+select name from customer  where name not in(
+        select name 
+        from customer,orders
+        where customer.custid=orders.custid
+        );
 
 /*2-9*/
 select sum(saleprice), avg(saleprice) from orders;
 
 /*2-10*/
-select sum(saleprice), avg(saleprice) from orders;
+select name,sum(saleprice) from customer,orders where customer.custid=orders.custid 
+        group by name;
 
 /*2-11*/
 select name, bookname from Book, orders, Customer where orders.bookid=Book.bookid and orders.custid=Customer.custid;
